@@ -10,8 +10,10 @@
     "test:coverage": "umi-test --coverage",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
