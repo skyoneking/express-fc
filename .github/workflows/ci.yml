@@ -22,7 +22,7 @@ jobs:
             npm install
             npm run build
       - name: upload files to OSS
-      - uses: fangbinwei/aliyun-oss-website-action@v1
+        uses: fangbinwei/aliyun-oss-website-action@v1
         with:
             accessKeyId: ${{ aliyunSecrets.ACCESSKEYID }}
             accessKeySecret: ${{ aliyunSecrets.ACCESSKEYSECRET }}
