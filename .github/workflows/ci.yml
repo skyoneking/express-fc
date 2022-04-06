@@ -9,7 +9,6 @@ jobs:
   build:
     # 构建运行的环境
     runs-on: ubuntu-latest
-    environment: aliyunSecrets
     # 构建步骤
     steps:
       - name: Checkout
@@ -24,8 +23,8 @@ jobs:
       - name: upload files to OSS
         uses: fangbinwei/aliyun-oss-website-action@v1
         with:
-            accessKeyId: ${{ aliyunSecrets.ACCESSKEYID }}
-            accessKeySecret: ${{ aliyunSecrets.ACCESSKEYSECRET }}
+            accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
+            accessKeySecret: ${{ secrets.ACCESS_KEY_SECRET }}
             bucket: todo-public
             # use your own endpoint
             endpoint: oss-cn-chengdu.aliyuncs.com
