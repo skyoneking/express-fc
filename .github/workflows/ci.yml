@@ -1,0 +1,35 @@
+# workflow的名称，会显示在工作流运行页面
+name: MainWorkflow
+
+# 工作流执行的契机：push表示每次push代码之后都会执行
+on: [push]
+  branches:
+    - master
+
+jobs:
+  # build job 我们用来做持续构建
+  build:
+    # 构建运行的环境
+    runs-on: ubuntu-latest
+    environment: aliyunSecrets
+    # 构建步骤
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          - name: upload files to OSS
+      - name: build
+        run: |
+            npm install
+            npm run build
+      - uses: fangbinwei/aliyun-oss-website-action@v1
+        with:
+            accessKeyId: ${{ aliyunSecrets.ACCESSKEYID }}
+            accessKeySecret: ${{ aliyunSecrets.ACCESSKEYSECRET }}
+            bucket: todo-public
+            # use your own endpoint
+            endpoint: oss-cn-chengdu.aliyuncs.com
+            folder: dist
+
