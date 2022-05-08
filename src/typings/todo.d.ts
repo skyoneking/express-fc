@@ -1,7 +1,7 @@
 declare namespace Todo {
     export interface TodoItem {
         id: number;
-        name: string;
+        title: string;
         createTime: string;
         triggerTime: string;
         triggerPeriod: string;

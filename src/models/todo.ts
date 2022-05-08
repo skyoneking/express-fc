@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRequest } from 'umi';
-import { queryTodoList } from '@/services/todoController';
+import { queryTodoList } from '@/services/todo';
 
 export default function todo() {
 	const [todoList, setTodoList] = useState<Todo.TodoList>([]);

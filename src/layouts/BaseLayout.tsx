@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link, Helmet } from 'umi';
 
-const { Header, Content } = Layout;
+const { Sider, Content } = Layout;
 
 enum MenuKey {
 	Home = 'home',
@@ -27,15 +27,15 @@ const BaseLayout: React.FC = ({ children }) => {
 	return (
 		<Layout style={{ backgroundColor: '#fff' }}>
 			<Helmet>
-				<title>{menuKey}</title>
+				<title>jcl</title>
 			</Helmet>
-			<Header style={{ backgroundColor: '#fff' }}>
+			<Sider>
 				<Menu
 					onSelect={({ key }) => {
 						setMenuKey(key);
 					}}
 					selectedKeys={[menuKey]}
-					mode="horizontal"
+					mode="inline"
 				>
 					{menuList.map(({ key, name, path }) => (
 						<Menu.Item key={key}>
@@ -43,7 +43,7 @@ const BaseLayout: React.FC = ({ children }) => {
 						</Menu.Item>
 					))}
 				</Menu>
-			</Header>
+			</Sider>
 			<Content style={{ padding: '0 20px' }}>{children}</Content>
 		</Layout>
 	);
