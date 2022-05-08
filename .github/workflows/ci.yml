@@ -9,7 +9,7 @@ on:
 
 jobs:
   # build job 我们用来做持续构建
-  build to ali-oss:
+  build_to_ali-oss:
     # 构建运行的环境
     runs-on: ubuntu-latest
     # 构建步骤
