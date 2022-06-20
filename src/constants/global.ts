@@ -1,4 +1,4 @@
-export const APIHost = 'http://fc.yojcl.top';
+export const APIHost = 'http://yojcl.top';
 
 export const DateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
 
