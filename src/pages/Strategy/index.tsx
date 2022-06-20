@@ -4,48 +4,48 @@ import React, { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import { DateTimeFormat, OperateType } from '@/constants/global';
-import * as service from '@/services/todo/todo';
+import * as service from '@/services/todo/strategy';
 import moment from 'moment';
 import { useRequest } from 'umi';
 import Operate from './Operate';
 import styles from './style.less';
 
-const Todo: React.FC = () => {
-  const [todoList, setTodoList] = useState<API.Todo[]>([]);
+const Strategy: React.FC = () => {
+  const [strategyList, setStrategyList] = useState<API.Strategy[]>([]);
 
-  const { run: todoFindAll, loading: todoFindAllLoading } = useRequest(service.TodoControllerFindAll, {
+  const { run: strategyFindAll, loading: strategyFindAllLoading } = useRequest(service.StrategyControllerFindAll, {
     manual: true,
     onSuccess(data) {
-      setTodoList(data);
+      setStrategyList(data);
     },
   });
-  const { run: todoDelete, loading: todoDeleteLoading } = useRequest(service.TodoControllerDelete, {
+  const { run: strategyDelete, loading: strategyDeleteLoading } = useRequest(service.StrategyControllerRemove, {
     manual: true,
     onSuccess() {
-      todoFindAll();
+      strategyFindAll();
     },
   });
-  const { run: todoCreate, loading: todoCreateLoading } = useRequest(service.TodoControllerCreate, {
+  const { run: strategyCreate, loading: strategyCreateLoading } = useRequest(service.StrategyControllerCreate, {
     manual: true,
     onSuccess() {
-      todoFindAll();
+      strategyFindAll();
     },
   });
-  const { run: todoUpdate, loading: todoUpdateLoading } = useRequest(service.TodoControllerUpdate, {
+  const { run: strategyUpdate, loading: strategyUpdateLoading } = useRequest(service.StrategyControllerUpdate, {
     manual: true,
     onSuccess() {
-      todoFindAll();
+      strategyFindAll();
     },
   });
 
   useEffect(() => {
-    todoFindAll();
+    strategyFindAll();
   }, []);
 
-  const columns: ColumnsType<API.Todo> = [
+  const columns: ColumnsType<API.Strategy> = [
     {
-      title: '标题',
-      dataIndex: 'title',
+      title: '名称',
+      dataIndex: 'name',
     },
     {
       title: '创建时间',
@@ -54,24 +54,14 @@ const Todo: React.FC = () => {
       render: (v) => moment(v).format(DateTimeFormat),
     },
     {
-      title: '类别',
-      dataIndex: 'type',
-      align: 'center',
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      align: 'center',
-    },
-    {
-      title: '开始时间',
-      dataIndex: 'startTime',
+      title: '启动时间',
+      dataIndex: 'launchTime',
       align: 'center',
       render: (v) => moment(v).format(DateTimeFormat),
     },
     {
-      title: '策略',
-      dataIndex: 'strategyId',
+      title: '周期',
+      dataIndex: 'period',
       align: 'center',
     },
     {
@@ -80,18 +70,18 @@ const Todo: React.FC = () => {
       align: 'center',
       render: (_, record) => (
         <>
-          <Operate todoItem={record} operateType={OperateType.READ} />
+          <Operate strategyItem={record} operateType={OperateType.READ} />
           <Operate
-            todoItem={record}
+            strategyItem={record}
             operateType={OperateType.WRITE}
-            onOk={(todoItem) => {
-              todoUpdate({ ...todoItem, id: record.id });
+            onOk={(strategyItem) => {
+              strategyUpdate({ ...strategyItem, id: record.id });
             }}
           />
           <Button
             type="link"
             onClick={() => {
-              todoDelete({ id: String(record.id) });
+              strategyDelete({ id: String(record.id) });
             }}
           >
             删除
@@ -103,27 +93,27 @@ const Todo: React.FC = () => {
 
   return (
     <PageContainer
-      title="代办管理"
+      title="策略管理"
       routes={[
         { path: '/home', breadcrumbName: '首页' },
-        { path: '/todo', breadcrumbName: '代办列表' },
+        { path: '/strategy', breadcrumbName: '策略列表' },
       ]}
     >
       <div className={styles.createBox}>
         <Operate
           operateType={OperateType.CREATE}
-          onOk={(todoItem) => {
-            todoCreate(todoItem);
+          onOk={(strategyItem) => {
+            strategyCreate(strategyItem);
           }}
         />
       </div>
       <Table
         columns={columns}
-        dataSource={todoList}
-        loading={todoFindAllLoading || todoDeleteLoading || todoCreateLoading || todoUpdateLoading}
+        dataSource={strategyList}
+        loading={strategyFindAllLoading || strategyDeleteLoading || strategyCreateLoading || strategyUpdateLoading}
         rowKey="id"
       />
     </PageContainer>
   );
 };
-export default Todo;
+export default Strategy;

@@ -1,0 +1,102 @@
+// @ts-ignore
+import { Request, Response } from 'express';
+
+export default {
+  'GET /api/todo': (req: Request, res: Response) => {
+    res.status(200).send({
+      success: false,
+      data: [
+        {
+          id: 77,
+          title: '教各展会技备变带热民级物素。',
+          type: 1,
+          status: 'error',
+          startTime: '低号变支量气据整两自北全已。',
+          createTime: 68,
+          strategyId: 81,
+        },
+        {
+          id: 63,
+          title: '战再常世王道务化存学老展问土生之成。',
+          type: 2,
+          status: 'default',
+          startTime: '历信必方看习克越复中直议非际管。',
+          createTime: 89,
+          strategyId: 90,
+        },
+        {
+          id: 75,
+          title: '更空积么高电美义那者群各处。',
+          type: 3,
+          status: 'success',
+          startTime: '照专米除例方除导意提六适算广从置书。',
+          createTime: 66,
+          strategyId: 84,
+        },
+        {
+          id: 61,
+          title: '多平当交识家由强军毛通状比况影火共。',
+          type: 4,
+          status: 'processing',
+          startTime: '从发原口据制利技际率手起片收任按。',
+          createTime: 81,
+          strategyId: 73,
+        },
+        {
+          id: 84,
+          title: '做共天想路直元少自方们去省这强老经。',
+          type: 5,
+          status: 'error',
+          startTime: '规会种加感色进许石去和或育。',
+          createTime: 80,
+          strategyId: 95,
+        },
+        {
+          id: 85,
+          title: '时级红点团水收结的没西存信第争度。',
+          type: 6,
+          status: 'error',
+          startTime: '我般具业提研现便作事真存低争方多任。',
+          createTime: 90,
+          strategyId: 67,
+        },
+        {
+          id: 70,
+          title: '条院小战只阶元流由压众许队什。',
+          type: 7,
+          status: 'default',
+          startTime: '下达率县真不务整易济文开级号写受。',
+          createTime: 62,
+          strategyId: 96,
+        },
+        {
+          id: 80,
+          title: '生现中区小治计直场数具住自在。',
+          type: 8,
+          status: 'error',
+          startTime: '除话果许真观定委维始理明用安说料收量。',
+          createTime: 69,
+          strategyId: 70,
+        },
+        {
+          id: 84,
+          title: '已集越得也联包却产定要身问选相。',
+          type: 9,
+          status: 'processing',
+          startTime: '完商在族发期路议身算向战支名直区听。',
+          createTime: 80,
+          strategyId: 79,
+        },
+        {
+          id: 80,
+          title: '志确道真来命由认论导立战王老深。',
+          type: 10,
+          status: 'default',
+          startTime: '命内领接见今选关话如或速会。',
+          createTime: 80,
+          strategyId: 85,
+        },
+      ],
+    });
+  },
+};

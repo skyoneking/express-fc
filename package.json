@@ -2,13 +2,14 @@
   "private": true,
   "scripts": {
     "dev": "umi dev",
-    "devs": "cross-env MOCK=none umi dev",
+    "start": "cross-env MOCK=none umi dev",
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
+    "openapi": "umi openapi"
   },
   "husky": {
     "hooks": {
@@ -25,8 +26,11 @@
     "*.{js,jsx,ts,tsx}": "eslint --fix"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-layout": "^6.5.0",
     "ahooks": "^3.1.13",
+    "classnames": "^2.3.1",
+    "moment": "^2.29.3",
     "react": "17.x",
     "react-dom": "17.x",
     "umi": "^3.5.21"
@@ -36,13 +40,16 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@umijs/fabric": "^2.10.2",
+    "@umijs/plugin-openapi": "^1.3.2",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.21",
+    "btoa": "^1.2.1",
     "cross-env": "^7.0.3",
     "husky": "^7.0.4",
     "lint-staged": "^10.0.7",
     "mockjs": "^1.1.0",
     "prettier": "^2.2.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "typescript": "^4.1.2",
     "yorkie": "^2.0.0"
   }

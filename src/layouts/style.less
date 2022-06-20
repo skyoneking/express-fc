@@ -1,0 +1,17 @@
+@boder: 1px solid rgba(0, 0, 0, 0.06);
+
+.header {
+    background-color: #fff;
+    border-bottom: @boder;
+}
+
+.sider {
+    background-color: #fff;
+    border-right: @boder;
+
+    :global {
+        .ant-menu {
+            border-right: none;
+        }
+    }
+}
