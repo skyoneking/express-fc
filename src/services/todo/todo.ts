@@ -67,3 +67,11 @@ export async function TodoControllerDelete(
     ...(options || {}),
   });
 }
+
+/** 此处后端没有提供注释 GET /api/todo/todoType */
+export async function TodoControllerQueryTodoType(options?: { [key: string]: any }) {
+  return request<API.TodoTypeRes>('/api/todo/todoType', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

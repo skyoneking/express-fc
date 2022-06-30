@@ -7,9 +7,9 @@ declare namespace API {
 
   type CreateTodoDto = {
     title: string;
-    type: string;
     status: string;
     startTime: string;
+    strategyId: number;
   };
 
   type CreateUserDto = {
@@ -20,6 +20,11 @@ declare namespace API {
   type LoginUserDto = {
     username: string;
     password: string;
+  };
+
+  type NameValueClass = {
+    name: string;
+    value: string;
   };
 
   type Strategy = {
@@ -54,8 +59,8 @@ declare namespace API {
     type: string;
     status: string;
     startTime: string;
-    createTime: number;
     strategyId: number;
+    createTime: number;
   };
 
   type TodoControllerDeleteParams = {
@@ -76,6 +81,11 @@ declare namespace API {
     data: Todo;
   };
 
+  type TodoTypeRes = {
+    success: boolean;
+    data: NameValueClass[];
+  };
+
   type UpdateStrategyDto = {
     id: number;
     name: string;
@@ -89,6 +99,7 @@ declare namespace API {
     type: string;
     status: string;
     startTime: string;
+    strategyId: number;
   };
 
   type UpdateUserDto = {

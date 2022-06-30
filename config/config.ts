@@ -18,11 +18,12 @@ export default defineConfig({
   },
   publicPath: process.env.NODE_ENV === 'production' ? 'http://oss.yojcl.top/' : '/',
 
-//   openAPI: {
-//     requestLibPath: "import { request } from 'umi'",
-//     schemaPath: 'http://localhost:9000/api-json',
-//     mock: false,
-//   },
+  openAPI: {
+    requestLibPath: "import { request } from 'umi'",
+    schemaPath: 'http://localhost:9000/api-json',
+    mock: false,
+    projectName: 'todo'
+  },
 
   extraPostCSSPlugins: [require('tailwindcss')],
 });

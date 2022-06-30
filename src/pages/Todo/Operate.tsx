@@ -72,9 +72,11 @@ const Operate: React.FC<Props> = (props) => {
           <Form.Item label="类别" name="type" rules={[{ required: true }]}>
             <Input disabled={isDisabled} />
           </Form.Item>
-          <Form.Item label="状态" name="status" rules={[{ required: true }]}>
-            <Input disabled={isDisabled} />
-          </Form.Item>
+          {operateType === OperateType.READ && (
+            <Form.Item label="状态" name="status">
+              <Input disabled={isDisabled} />
+            </Form.Item>
+          )}
           <Form.Item label="开始时间" name="startTime" rules={[{ required: true }]}>
             <DatePicker style={{ width: '100%' }} disabled={isDisabled} showTime />
           </Form.Item>

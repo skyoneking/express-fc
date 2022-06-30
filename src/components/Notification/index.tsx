@@ -2,6 +2,7 @@ import { initNotification } from '@/utils/notification';
 import { useBoolean } from 'ahooks';
 import { message, Modal } from 'antd';
 import React, { useEffect } from 'react';
+import socket from '@/utils//websocket'
 
 interface Props {
   title?: string;
@@ -15,7 +16,7 @@ interface NotificationApi {
 
 const defaultTitle = '代办通知';
 
-// 暴露的api
+// 暴露的基础api
 export const notificationApi: NotificationApi = {
   notification: undefined,
   notify(title = defaultTitle, options) {
@@ -26,6 +27,16 @@ export const notificationApi: NotificationApi = {
 
 const Notification: React.FC<Props> = ({ title = defaultTitle, options }) => {
   const [isOpenModal, { setTrue: openModal, setFalse: closeModal }] = useBoolean(false);
+
+  useEffect(() => {
+    console.log(11111111111);
+
+    socket.emit('start')
+
+    socket.on('startedTodo', (d) => {
+        console.log(22222, d)
+    })
+  }, [])
 
   useEffect(() => {
     initNotification().then((result) => {
