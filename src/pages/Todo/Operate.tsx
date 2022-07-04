@@ -1,7 +1,7 @@
 import { DateTimeFormat, OperateType, OperateTypeMap } from '@/constants/global';
 import { useBoolean } from 'ahooks';
 import type { FormInstance } from 'antd';
-import { Button, DatePicker, Form, Input, Modal } from 'antd';
+import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 import moment from 'moment';
 import React, { useEffect, useRef } from 'react';
 
@@ -12,11 +12,12 @@ export interface TodoItemForForm extends Omit<API.Todo, 'id' | 'createTime' | 's
 interface Props {
   todoItem?: API.Todo;
   operateType: OperateType.CREATE | OperateType.READ | OperateType.WRITE;
+  strategyList: API.Strategy[];
   onOk?: (todoItem: Omit<TodoItemForForm, 'startTime'> & { startTime: string }) => any;
 }
 
 const Operate: React.FC<Props> = (props) => {
-  const { todoItem, operateType, onOk } = props;
+  const { todoItem, operateType, strategyList, onOk } = props;
   const isDisabled = operateType === OperateType.READ;
 
   const todoFormRef = useRef<FormInstance<TodoItemForForm>>(null);
@@ -77,11 +78,17 @@ const Operate: React.FC<Props> = (props) => {
               <Input disabled={isDisabled} />
             </Form.Item>
           )}
-          <Form.Item label="开始时间" name="startTime" rules={[{ required: true }]}>
+          <Form.Item label="提醒时间" name="startTime" rules={[{ required: true }]}>
             <DatePicker style={{ width: '100%' }} disabled={isDisabled} showTime />
           </Form.Item>
           <Form.Item label="策略" name="strategyId" rules={[{ required: true }]}>
-            <Input disabled={isDisabled} />
+            <Select disabled={isDisabled}>
+              {strategyList.map((item) => (
+                <Select.Option value={item.id} key={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

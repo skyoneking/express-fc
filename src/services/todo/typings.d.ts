@@ -1,8 +1,9 @@
 declare namespace API {
   type CreateStrategyDto = {
     name: string;
-    launchTime: string;
-    period: string;
+    type: string;
+    period: number;
+    unit: string;
   };
 
   type CreateTodoDto = {
@@ -22,16 +23,12 @@ declare namespace API {
     password: string;
   };
 
-  type NameValueClass = {
-    name: string;
-    value: string;
-  };
-
   type Strategy = {
     id: number;
     name: string;
-    launchTime: string;
-    period: string;
+    type: string;
+    period: number;
+    unit: string;
     createTime: number;
   };
 
@@ -81,16 +78,12 @@ declare namespace API {
     data: Todo;
   };
 
-  type TodoTypeRes = {
-    success: boolean;
-    data: NameValueClass[];
-  };
-
   type UpdateStrategyDto = {
     id: number;
     name: string;
-    launchTime: string;
-    period: string;
+    type: string;
+    period: number;
+    unit: string;
   };
 
   type UpdateTodoDto = {

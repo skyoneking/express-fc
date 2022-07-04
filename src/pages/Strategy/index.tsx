@@ -54,15 +54,21 @@ const Strategy: React.FC = () => {
       render: (v) => moment(v).format(DateTimeFormat),
     },
     {
-      title: '启动时间',
-      dataIndex: 'launchTime',
+      title: '类型',
+      dataIndex: 'type',
       align: 'center',
-      render: (v) => moment(v).format(DateTimeFormat),
     },
     {
       title: '周期',
       dataIndex: 'period',
       align: 'center',
+      render: (v, record) => (record.type === 'once' ? '-' : v ?? '-'),
+    },
+    {
+      title: '单位',
+      dataIndex: 'unit',
+      align: 'center',
+      render: (v, record) => (record.type === 'once' ? '-' : v),
     },
     {
       title: '操作',

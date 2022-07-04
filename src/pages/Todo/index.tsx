@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import { DateTimeFormat, OperateType } from '@/constants/global';
+import * as strategyService from '@/services/todo/strategy';
 import * as service from '@/services/todo/todo';
 import moment from 'moment';
 import { useRequest } from 'umi';
@@ -12,6 +13,7 @@ import styles from './style.less';
 
 const Todo: React.FC = () => {
   const [todoList, setTodoList] = useState<API.Todo[]>([]);
+  const [strategyList, setStrategyList] = useState<API.Strategy[]>([]);
 
   const { run: todoFindAll, loading: todoFindAllLoading } = useRequest(service.TodoControllerFindAll, {
     manual: true,
@@ -37,8 +39,15 @@ const Todo: React.FC = () => {
       todoFindAll();
     },
   });
+  const { run: strategyFindAll } = useRequest(strategyService.StrategyControllerFindAll, {
+    manual: true,
+    onSuccess(data) {
+      setStrategyList(data ?? []);
+    },
+  });
 
   useEffect(() => {
+    strategyFindAll();
     todoFindAll();
   }, []);
 
@@ -64,7 +73,7 @@ const Todo: React.FC = () => {
       align: 'center',
     },
     {
-      title: '开始时间',
+      title: '提醒时间',
       dataIndex: 'startTime',
       align: 'center',
       render: (v) => moment(v).format(DateTimeFormat),
@@ -73,6 +82,7 @@ const Todo: React.FC = () => {
       title: '策略',
       dataIndex: 'strategyId',
       align: 'center',
+      render: (v) => strategyList.find((item) => item.id === v)?.name,
     },
     {
       title: '操作',
@@ -80,8 +90,9 @@ const Todo: React.FC = () => {
       align: 'center',
       render: (_, record) => (
         <>
-          <Operate todoItem={record} operateType={OperateType.READ} />
+          <Operate strategyList={strategyList} todoItem={record} operateType={OperateType.READ} />
           <Operate
+            strategyList={strategyList}
             todoItem={record}
             operateType={OperateType.WRITE}
             onOk={(todoItem) => {
@@ -111,6 +122,7 @@ const Todo: React.FC = () => {
     >
       <div className={styles.createBox}>
         <Operate
+          strategyList={strategyList}
           operateType={OperateType.CREATE}
           onOk={(todoItem) => {
             todoCreate(todoItem);

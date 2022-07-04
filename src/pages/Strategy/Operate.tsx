@@ -1,8 +1,10 @@
 import { OperateType, OperateTypeMap } from '@/constants/global';
 import { useBoolean } from 'ahooks';
+
 import type { FormInstance } from 'antd';
-import { Button, DatePicker, Form, Input, Modal } from 'antd';
-import React, { useEffect, useRef } from 'react';
+
+import { Button, Form, Input, Modal, Select } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 
 export type StrategyItemForForm = Omit<API.Strategy, 'id' | 'createTime'>;
 
@@ -14,6 +16,7 @@ interface Props {
 
 const Operate: React.FC<Props> = (props) => {
   const { strategyItem, operateType, onOk } = props;
+  const [isPeriod, setIsPeriod] = useState(strategyItem?.type === 'period');
   const isDisabled = operateType === OperateType.READ;
 
   const strategyFormRef = useRef<FormInstance<StrategyItemForForm>>(null);
@@ -22,8 +25,8 @@ const Operate: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (isShowOperateModal) {
-      const { name, launchTime, period } = strategyItem ?? {};
-      strategyFormRef.current?.setFieldsValue({ name, launchTime, period });
+      const { name, type, period, unit } = strategyItem ?? {};
+      strategyFormRef.current?.setFieldsValue({ name, type, period, unit });
     } else {
       strategyFormRef.current?.resetFields();
     }
@@ -62,16 +65,44 @@ const Operate: React.FC<Props> = (props) => {
         okText="确定"
         cancelButtonProps={{ style: { display: 'none' } }}
       >
-        <Form<StrategyItemForForm> ref={strategyFormRef} labelCol={{ span: 4, offset: 4 }} wrapperCol={{ span: 8 }}>
+        <Form<StrategyItemForForm>
+          ref={strategyFormRef}
+          labelCol={{ span: 4, offset: 4 }}
+          wrapperCol={{ span: 8 }}
+          onValuesChange={(changeValues) => {
+            if (Reflect.has(changeValues, 'type')) {
+              setIsPeriod(changeValues.type === 'period');
+            }
+          }}
+        >
           <Form.Item label="名称" name="name" rules={[{ required: true }]}>
             <Input disabled={isDisabled} />
           </Form.Item>
-          <Form.Item label="启动时间" name="launchTime" rules={[{ required: true }]}>
-            <DatePicker style={{ width: '100%' }} disabled={isDisabled} showTime />
+          <Form.Item label="类型" name="type" rules={[{ required: true }]}>
+            <Select>
+              {['once', 'period'].map((item) => (
+                <Select.Option value={item} key={item}>
+                  {item}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
-          <Form.Item label="周期" name="period" rules={[{ required: true }]}>
-            <Input disabled={isDisabled} />
-          </Form.Item>
+          {isPeriod && (
+            <>
+              <Form.Item label="周期" name="period" rules={[{ required: true }]}>
+                <Input disabled={isDisabled} />
+              </Form.Item>
+              <Form.Item label="单位" name="unit" rules={[{ required: true }]}>
+                <Select>
+                  {['seconds', 'minutes', 'hours', 'days', 'weeks', 'months', 'years'].map((item) => (
+                    <Select.Option value={item} key={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </>
+          )}
         </Form>
       </Modal>
     </>
