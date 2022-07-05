@@ -1,6 +1,7 @@
 import { APIHost } from '@/constants/global';
 import { isProd } from '@/utils';
 import type { RequestConfig } from 'umi';
+import { history } from 'umi';
 import { getAuthorization } from './constants/auth';
 import './global.less';
 
@@ -13,8 +14,8 @@ export const request: RequestConfig = {
         options: {
           ...options,
           headers: {
-            // Authorization: `Bearer ${getAuthorization()}`,
-            Authorization: `Bearer ${getAuthorization(true)}`,
+            Authorization: `Bearer ${getAuthorization()}`,
+            // Authorization: `Bearer ${getAuthorization(true)}`,
           },
         },
       };
@@ -22,9 +23,13 @@ export const request: RequestConfig = {
   ],
   errorConfig: {
     adaptor(resData: any) {
+      if (resData.statusCode === 401) {
+        history.push('/login');
+        return { success: false, showType: 0 };
+      }
       return {
         success: !!resData.success,
-        errorMessage: resData.message || '未知错误',
+        message: resData.message || '未知错误',
       };
     },
   },

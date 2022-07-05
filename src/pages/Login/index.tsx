@@ -2,6 +2,7 @@ import type { FormInstance } from 'antd';
 import { Button, Card, Form, Input } from 'antd';
 import React, { useRef } from 'react';
 import { history, useRequest } from 'umi';
+import {useEventListener} from 'ahooks'
 
 import { setAuthorization } from '@/constants/auth';
 import * as service from '@/services/todo/login';
@@ -14,6 +15,8 @@ type LoginForm = {
 const Login: React.FC = () => {
   const loginFormRef = useRef<FormInstance<LoginForm>>(null);
 
+  const loginBtnRef = useRef<HTMLElement>(null);
+
   const { run: login, loading: loginLoading } = useRequest(service.LoginControllerLogin, {
     manual: true,
     onSuccess(data) {
@@ -23,6 +26,13 @@ const Login: React.FC = () => {
       }
     },
   });
+
+  useEventListener('keyup', (e) => {
+    if(e.key === 'Enter') {
+        loginBtnRef.current?.click();
+    }
+  })
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <div className="w-600 h-400">
@@ -42,6 +52,7 @@ const Login: React.FC = () => {
           <div className="flex h-60 justify-around mt-20">
             <Button type="link">忘记密码</Button>
             <Button
+              ref={loginBtnRef}
               className="self-end mr-60 w-80"
               type="primary"
               loading={loginLoading}

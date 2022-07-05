@@ -54,6 +54,11 @@ const Strategy: React.FC = () => {
       render: (v) => moment(v).format(DateTimeFormat),
     },
     {
+      title: '作用范围',
+      dataIndex: 'scope',
+      align: 'center',
+    },
+    {
       title: '类型',
       dataIndex: 'type',
       align: 'center',

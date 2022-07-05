@@ -42,6 +42,9 @@ module.exports = {
                 1000: '1000px',
             }
         },
+        minWidth: {
+            100: '100px'
+        }
     },
     plugins: [],
 }

@@ -1,10 +1,12 @@
 import Notification from '@/components/Notification';
-import { AliwangwangOutlined } from '@ant-design/icons';
-import { ConfigProvider, Layout, Menu } from 'antd';
+import { AliwangwangOutlined, UserOutlined } from '@ant-design/icons';
+import { ConfigProvider, Dropdown, Layout, Menu } from 'antd';
 import Chinese from 'antd/lib/locale/zh_CN';
+import cls from 'classnames';
 import React, { useEffect, useState } from 'react';
-import { Helmet, Link, useLocation } from 'umi';
+import { Helmet, history, Link, useLocation } from 'umi';
 
+import { clearAuthorization } from '@/constants/auth';
 import styles from './style.less';
 
 const { Sider, Content, Header } = Layout;
@@ -52,8 +54,34 @@ const BaseLayout: React.FC = ({ children }) => {
     <ConfigProvider locale={Chinese}>
       <Layout style={{ minHeight: '100vh' }}>
         <Notification />
-        <Header className={styles.header}>
-          <AliwangwangOutlined className='text-2xl' />
+        <Header className={cls({ [styles.header]: true, 'flex justify-between items-center': true })}>
+          <AliwangwangOutlined className="text-2xl" />
+          <Dropdown
+            overlay={
+              <Menu
+                className="min-w-100"
+                items={[
+                  {
+                    key: '1',
+                    label: (
+                      <div
+                        onClick={() => {
+                          clearAuthorization();
+                          history.push('/login');
+                        }}
+                      >
+                        退出
+                      </div>
+                    ),
+                  },
+                ]}
+              />
+            }
+            placement="bottom"
+            arrow
+          >
+            <UserOutlined className="text-xl" />
+          </Dropdown>
         </Header>
         <Layout style={{ backgroundColor: '#fff' }}>
           <Helmet>

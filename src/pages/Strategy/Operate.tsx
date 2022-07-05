@@ -16,12 +16,16 @@ interface Props {
 
 const Operate: React.FC<Props> = (props) => {
   const { strategyItem, operateType, onOk } = props;
-  const [isPeriod, setIsPeriod] = useState(strategyItem?.type === 'period');
+  const [isPeriod, setIsPeriod] = useState(false);
   const isDisabled = operateType === OperateType.READ;
 
   const strategyFormRef = useRef<FormInstance<StrategyItemForForm>>(null);
 
   const [isShowOperateModal, { setTrue: openOperateModal, setFalse: closeOperateModal }] = useBoolean(false);
+
+  useEffect(() => {
+    setIsPeriod(strategyItem?.type === 'period');
+  }, [strategyItem]);
 
   useEffect(() => {
     if (isShowOperateModal) {
